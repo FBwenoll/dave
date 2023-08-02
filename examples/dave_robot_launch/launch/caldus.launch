@@ -14,8 +14,12 @@
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
   <arg name="yaw" default="-1.8"/>
+<<<<<<< HEAD
 
 
+=======
+    
+>>>>>>> 9387f8155affbb0e79fc4901278b2959438f9e85
   <!-- use Gazebo's empty_world.launch with dave_ocean_waves.world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(arg world_name)"/>

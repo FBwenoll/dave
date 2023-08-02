@@ -5,5 +5,6 @@ repositories:
     version: main
   marine_msgs:
     type: git
-    url: git@github.com:apl-ocean-engineering/marine_msgs.git
+    url: git@github.com:FBwenoll/nps_uw_multibeam_sonar.git
+    
     version: main
