@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="smilodon"/>
+  <node pkg="dave_nodes" type="keyboard_thrusterop.py" name="keyboard_thrusterop_$(arg namespace)"
+	output="screen">
+    <param name="namespace" value="$(arg namespace)"/>
+  </node>
+
+</launch>

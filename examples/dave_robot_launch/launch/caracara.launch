@@ -8,12 +8,12 @@
   <arg name="joy_id" default="0"/>
   <arg name="debug" default="false"/>
   <arg name="verbose" default="false"/>
-  <arg name="x" default="25"/>
+  <arg name="x" default="0"/>
   <arg name="y" default="0"/>
-  <arg name="z" default="-85"/>
+  <arg name="z" default="0"/>
   <arg name="roll" default="0"/>
   <arg name="pitch" default="0"/>
-  <arg name="yaw" default="-1.8"/>
+  <arg name="yaw" default="0"/>
     
   <!-- use Gazebo's empty_world.launch with dave_ocean_waves.world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -69,7 +69,7 @@
   <node name="spawn_caracara" pkg="gazebo_ros" type="spawn_model"
         respawn="false" output="screen"
         args="-urdf -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg namespace) -param /$(arg namespace)/caracara"/>
-
+        
   <!-- A joint state publisher plugin already is started with the model,
        no need to use the default joint state publisher. -->
   <!-- Robot state publisher subscribes to the custom joint state publisher -->
