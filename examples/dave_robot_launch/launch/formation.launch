@@ -79,8 +79,7 @@
     </include>
   <!-- keyboard control node -->
     <include file="$(find dave_nodes)/launch/keyboard_thrusterop.launch">
-    <arg name="namespace" value="$(arg auv1)"/>
-
+        <arg name="namespace" value="$(arg auv1)"/>
     </include>
   <!-- spawn the vehicle -->
     <node name="spawn_$(arg auv1)" pkg="gazebo_ros" type="spawn_model"

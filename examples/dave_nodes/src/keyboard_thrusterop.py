@@ -9,24 +9,42 @@ import sys
 import  tty, termios
 from uuv_gazebo_ros_plugins_msgs.msg import FloatStamped
 
+#msgs are dict() in which the params are FloatStamped()
+class Thrusters:
+    def __init__(self,namespace="virgil",thruster_number="7"):
+        self.thruster_number = thruster_number
+        # Init the msg& publisher
+        self.thruster_pub = dict()
+        for i in range(thruster_number+1):
+            self.thruster_pub[i] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,i), FloatStamped, queue_size=1)
+
+        # public params
+        # the velocity of i th thruster
+        self.thruster = dict()
+        for i in range(0,self.thruster_number+1):
+            self.thruster[i] = FloatStamped()
+            self.thruster[i].data = 0
+
+    def control(self):
+        #check out whether the type of msgs is correct 
+        if type(self.thruster) != dict and self.thruster[0] != FloatStamped:
+            rospy.ERROR("the tpye of msgs is NOT dict() or the key of msgs is not FloatStamped().\n")
+        else:
+            for i in range(self.thruster_number+1):
+                self.thruster_pub[i].publish(self.thruster[i])
+
+
+
+
+
 class ThrusterOp:
     def __init__(self, namespace='smilodon'):
-        # Keyboards==>publishers
-        self.keyboard2thrust = dict()
-        self.keyboard2thrust[0] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,0), FloatStamped, queue_size=1)
-        self.keyboard2thrust[1] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,1), FloatStamped, queue_size=1)
-        self.keyboard2thrust[2] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,2), FloatStamped, queue_size=1)
-        self.keyboard2thrust[3] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,3), FloatStamped, queue_size=1)
-        self.keyboard2thrust[4] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,4), FloatStamped, queue_size=1)
-        self.keyboard2thrust[5] = rospy.Publisher('/%s/thrusters/%d/input'%(namespace,5), FloatStamped, queue_size=1)
-        # Init the msg
-        self.msg = FloatStamped()
-        self.msg.data = 500  #the number of data affects the velocity
+        self.ts = Thrusters(namespace=namespace,thruster_number=7)
         # Init the publish frquency
-        self.rate = rospy.Rate(10)   
-
-    # 读取按键       
+          
+       
     def keyboradloop(self):
+        rate = rospy.Rate(10) 
         while not rospy.is_shutdown():
             fd = sys.stdin.fileno()
             old_settings = termios.tcgetattr(fd)
@@ -38,24 +56,24 @@ class ThrusterOp:
             finally :
                 termios.tcsetattr(fd,termios.TCSADRAIN, old_settings)
     
-            if ch == "q":
-                self.keyboard2thrust[0].publish(self.msg)
-            elif ch == "w":
-                self.keyboard2thrust[1].publish(self.msg)
-            elif ch == "e":
-                self.keyboard2thrust[2].publish(self.msg)
-            elif ch == "r":
-                self.keyboard2thrust[3].publish(self.msg)
-            elif ch == "t":
-                self.keyboard2thrust[4].publish(self.msg)
-            elif ch == "y":
-                self.keyboard2thrust[5].publish(self.msg)
-            elif ch == "m":
-                self.msg.data = 0
-            elif ch == "2":
-                self.msg.data-=300
-            self.rate.sleep()
-
+            if ch == "w":
+                self.ts.thruster[0].data = 500
+            elif ch == "s":
+                self.ts.thruster[1].data = -500
+            if ch == "a":
+                self.ts.thruster[2].data = 300
+            elif ch == "d":
+                self.ts.thruster[3].data = 300
+            if ch == "e":
+                self.ts.thruster[4].data+=300
+            elif ch == "d":
+                self.ts.thruster[5].data-=300
+            if ch == "r":
+                self.ts.thruster[6].data+=300
+            if ch == "M":
+                break     
+            self.ts.control()
+            rate.sleep()
 
 
 if __name__ == '__main__':
