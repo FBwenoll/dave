@@ -5,7 +5,7 @@
   <description>The dave_nodes package contains miscellaneous ROS node definitions used by the examples</description>
   <maintainer email="dtdavi1@nps.edu">dtd</maintainer>
   <license>Apache2</license>
-  <author email="dtdavi1@nps.edu">dtd</author> -->
+  <author email="dtdavi1@nps.edu">dtd</author> 
   <buildtool_depend>catkin</buildtool_depend>
   <exec_depend>moveit_commander</exec_depend>
   <export>
