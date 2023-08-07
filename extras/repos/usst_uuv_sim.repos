@@ -1,0 +1,5 @@
+repositories:
+  usst_uuv_simulator:
+    type: git
+    url: git@github.com:FBwenoll/usst_uuv_simulator.git
+    version: main

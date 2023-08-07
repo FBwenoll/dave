@@ -22,6 +22,7 @@ If not already installed -[install vcstool.](http://wiki.ros.org/vcstool)
 ``` bash
 cd ~/uuv_ws/src
 vcs import --skip-existing --input dave/extras/repos/dave_sim.repos .
+vcs import --skip-existing --input dave/extras/repos/usst_uuv_sim.repos .
 ```
 
 If you get error `Could not determine ref type of version: git@github.com: Permission denied (publickey).`, try following [Git Hub Error Permission Denied Publickey](https://docs.github.com/en/authentication/troubleshooting-ssh/error-permission-denied-publickey) and remove clone failed empty directory and try again
